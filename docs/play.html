@@ -2,9 +2,33 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>音再生</title>
+  <title>Turn Checker</title>
 </head>
-<body style="display:flex;justify-content:center;align-items:center;height:100vh;">
-  <button onclick="new Audio('se_card_wa01.mp3').play()" style="font-size:2em;">音を鳴らす</button>
+<body style="margin:0;display:flex;justify-content:center;align-items:center;height:100vh;">
+  <div id="main" style="font-size:3em;font-weight:bold;color:white;text-align:center;width:100vw;height:100vh;background-color:orange;display:flex;align-items:center;justify-content:center;" onclick="togglePlayer()">
+    ➡️Player1➡️
+  </div>
+
+  <script>
+    let isPlayerOne = true;
+    let sound;
+
+    document.body.addEventListener('click', async () => {
+      // 初回クリックでAudioを作っておく（これで自動再生ブロックを回避）
+      if (!sound) {
+        sound = new Audio("docs/se_card_wa01.mp3");
+      } else {
+        sound.currentTime = 0;
+        await sound.play();
+      }
+    });
+
+    function togglePlayer() {
+      const main = document.getElementById("main");
+      isPlayerOne = !isPlayerOne;
+      main.innerText = isPlayerOne ? "➡️Player1➡️" : "⬅️Player2⬅️";
+      main.style.backgroundColor = isPlayerOne ? "orange" : "deepskyblue";
+    }
+  </script>
 </body>
 </html>
